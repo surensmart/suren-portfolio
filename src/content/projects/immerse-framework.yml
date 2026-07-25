@@ -1,7 +1,21 @@
 title: IMMERSE Framework
 year: 2025
-summary: A learning framework for immersive media education adopted by Zhengzhou Business University and Lincoln University College.
+summary: >-
+  A learning framework for immersive media education adopted by Zhengzhou
+  Business University and Lincoln University College.
+
+
+  The **IMMERSE Framework** is a pedagogical approach developed to guide the meaningful integration of immersive technologies into teaching and learning. Rather than using virtual or mixed reality as a novelty, the framework helps educators align immersive experiences with clear learning outcomes, active participation, reflection, and assessment.
+
+
+  The framework supports the design of learning activities in which students explore concepts through experience, interaction, and situated practice. It is particularly suited to subjects where spatial understanding, embodied learning, simulation, storytelling, or experiential engagement can strengthen comprehension.
+
+
+  IMMERSE has informed the design of my immersive learning projects, including virtual reality activities in theory-heavy courses. It provides educators with a structured way to determine when immersive technology adds genuine educational value and how it can be incorporated without losing sight of accessibility, pedagogy, or student learning.
 category: Learning Design
 featured: true
-tags: [VR, Pedagogy, Learning design]
-image: /uploads/immerse-vr.png
+image: /uploads/picture1.png
+tags:
+  - VR
+  - Pedagogy
+  - Learning design
