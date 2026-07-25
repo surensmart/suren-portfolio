@@ -1,0 +1,4 @@
+---
+const { eyebrow, title, text } = Astro.props;
+---
+<section class="page-intro shell"><p class="eyebrow">{eyebrow}</p><h1>{title}</h1>{text && <p class="lede">{text}</p>}</section>

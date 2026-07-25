@@ -1,0 +1,252 @@
+backend:
+  name: github
+  repo: surensmart/suren-portfolio
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# Enables direct file editing when `npm run cms` is running locally.
+local_backend:
+  url: http://127.0.0.1:8081/api/v1
+  allowed_hosts: [localhost, 127.0.0.1]
+
+site_url: https://www.surensmart.me
+display_url: https://www.surensmart.me
+logo_url: https://www.surensmart.me/favicon.svg
+media_folder: public/uploads
+public_folder: /uploads
+publish_mode: simple
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: settings
+    label: Site Settings
+    files:
+      - name: site
+        label: Profile & Homepage
+        file: src/content/settings/site.yml
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Credentials, name: credentials, widget: string }
+          - { label: Homepage eyebrow, name: eyebrow, widget: string }
+          - { label: Homepage headline, name: headline, widget: string }
+          - { label: Homepage introduction, name: introduction, widget: text }
+          - { label: Professional profile, name: professional_profile, widget: text }
+          - { label: Profile picture, name: profile_image, widget: image }
+          - { label: Profile picture description, name: profile_image_alt, widget: string }
+          - { label: Email, name: email, widget: string }
+          - { label: LinkedIn URL, name: linkedin, widget: string }
+          - { label: Phone, name: phone, widget: string, required: false }
+          - { label: Location, name: location, widget: string }
+          - { label: Years of experience, name: years_experience, widget: string }
+          - { label: Countries taught in, name: countries_taught, widget: string }
+          - { label: Publication count, name: publication_count, widget: string }
+          - { label: Creative practice label, name: practice_label, widget: string }
+  - name: teaching
+    label: Teaching Philosophy
+    files:
+      - name: philosophy
+        label: Teaching Philosophy Page
+        file: src/content/teaching/philosophy.yml
+        fields:
+          - { label: Page title, name: title, widget: string }
+          - { label: Featured quote, name: quote, widget: text }
+          - { label: Quote author, name: quote_author, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Philosophy sections
+            name: sections
+            widget: list
+            fields:
+              - { label: Heading, name: title, widget: string }
+              - { label: Text, name: text, widget: markdown }
+          - { label: Featured image, name: image, widget: image, required: false }
+          - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: profiles
+    label: Research Profiles & Memberships
+    folder: src/content/profiles
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: URL, name: url, widget: string }
+      - { label: Identifier / membership ID, name: identifier, widget: string, required: false }
+      - { label: Category, name: category, widget: select, options: [Research profile, Professional membership] }
+  - name: experience
+    label: Experience
+    folder: src/content/experience
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{start_date}}-{{slug}}"
+    summary: "{{role}} — {{organization}}"
+    fields:
+      - { label: Role, name: role, widget: string }
+      - { label: Organization, name: organization, widget: string }
+      - { label: Location, name: location, widget: string, required: false }
+      - { label: Start date, name: start_date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: End date, name: end_date, widget: string, hint: "YYYY-MM-DD or Present" }
+      - { label: Bullet points, name: bullets, widget: list, field: { label: Point, name: point, widget: text } }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: YouTube/Vimeo URL, name: video_url, widget: string, required: false }
+  - name: education
+    label: Education
+    folder: src/content/education
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{end_date}}-{{slug}}"
+    fields:
+      - { label: Degree, name: degree, widget: string }
+      - { label: Institution, name: institution, widget: string }
+      - { label: Location, name: location, widget: string, required: false }
+      - { label: Start date, name: start_date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: End date, name: end_date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: publications
+    label: Publications
+    folder: src/content/publications
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{year}}-{{slug}}"
+    summary: "{{year}} — {{title}}"
+    fields:
+      - { label: Authors, name: authors, widget: string }
+      - { label: Title, name: title, widget: string }
+      - { label: Journal / source, name: source, widget: string }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - { label: DOI / link, name: link, widget: string, required: false }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: grants
+    label: Grants
+    folder: src/content/grants
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{start_date}}-{{slug}}"
+    fields:
+      - { label: Project title, name: title, widget: string }
+      - { label: Funder, name: funder, widget: string }
+      - { label: Amount, name: amount, widget: string, required: false }
+      - { label: Role, name: role, widget: string, hint: "CI, AI, team member, etc." }
+      - { label: Start date, name: start_date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: End date, name: end_date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: Status, name: status, widget: select, options: [Active, Completed, Awarded] }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: awards
+    label: Awards & Recognitions
+    folder: src/content/awards
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{date}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Event / awarding body, name: body, widget: string }
+      - { label: Date, name: date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: engagements
+    label: Engagements
+    folder: src/content/engagements
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{date}}-{{slug}}"
+    fields:
+      - { label: Title / role, name: title, widget: string }
+      - { label: Organization, name: organization, widget: string }
+      - { label: Date, name: date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: certifications
+    label: Certifications
+    folder: src/content/certifications
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Issuing body, name: issuing_body, widget: string }
+      - { label: Date, name: date, widget: datetime, format: YYYY-MM-DD, time_format: false, required: false }
+      - { label: Credential URL, name: link, widget: string, required: false }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: media
+    label: Media & News
+    folder: src/content/media
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{date}}-{{slug}}"
+    fields:
+      - { label: Outlet, name: outlet, widget: string }
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: YYYY-MM-DD, time_format: false }
+      - { label: Link, name: link, widget: string, required: false }
+      - { label: Type, name: type, widget: select, options: [TV, Print, Online] }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: ntros
+    label: NTROs
+    folder: src/content/ntros
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Type, name: type, widget: string }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - { label: Award status, name: award_status, widget: string, required: false }
+      - { label: Collaborators, name: collaborators, widget: string, required: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Video URL, name: video_url, widget: string, required: false }
+  - name: specializations
+    label: Specializations & Competencies
+    folder: src/content/specializations
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Category, name: category, widget: select, options: [Specialization, Competency] }
+      - { label: Rating, name: rating, widget: number, min: 1, max: 5, value_type: int, required: false }
+  - name: projects
+    label: Projects / Portfolio
+    folder: src/content/projects
+    create: true
+    extension: yml
+    format: yml
+    slug: "{{year}}-{{slug}}"
+    summary: "{{year}} — {{title}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - { label: Summary, name: summary, widget: markdown }
+      - { label: Category, name: category, widget: string }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Cover image, name: image, widget: image, required: false }
+      - label: Image gallery
+        name: images
+        widget: list
+        required: false
+        field: { label: Image, name: image, widget: image }
+      - { label: YouTube/Vimeo URL, name: video_url, widget: string, required: false }
+      - { label: External link, name: link, widget: string, required: false }
+      - { label: Tags, name: tags, widget: list, required: false }

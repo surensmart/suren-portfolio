@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import MediaBlock from '../components/MediaBlock.astro';
+const philosophy = (await getCollection('teaching'))[0].data;
+---
+<Base title="Teaching Philosophy — Dr. Surendheran K." description="The teaching and learning philosophy of Dr. Surendheran K.">
+  <PageIntro eyebrow="Teaching practice" title={philosophy.title} text={philosophy.introduction}/>
+  <section class="section shell">
+    <blockquote class="feature-quote"><p>“{philosophy.quote}”</p><cite>— {philosophy.quote_author}</cite></blockquote>
+    <MediaBlock image={philosophy.image} video_url={philosophy.video_url} title={philosophy.title}/>
+  </section>
+  <section class="philosophy-grid shell">{philosophy.sections.map((section,index)=><article class="card"><span class="section-number">0{index+1}</span><h2>{section.title}</h2><p>{section.text}</p></article>)}</section>
+</Base>

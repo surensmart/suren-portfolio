@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+const skills = await getCollection('specializations');
+const specs = skills.filter(x=>x.data.category==='Specialization');
+const settings = (await getCollection('site'))[0].data;
+const featuredProjects = (await getCollection('projects')).filter(x=>x.data.featured).sort((a,b)=>b.data.year-a.data.year).slice(0,2);
+---
+<Base title="Dr. Surendheran K. — Digital Media Educator & Creative Technologist">
+  <section class="hero shell">
+    <div><p class="eyebrow">{settings.eyebrow}</p><h1>{settings.headline}</h1><p class="role">{settings.introduction}</p><div class="hero-actions"><a class="button primary" href="/projects">Explore my work&nbsp; →</a><a class="button" href="/publications">View research</a></div></div>
+    <div class="hero-photo"><img src={settings.profile_image} alt={settings.profile_image_alt} /></div>
+  </section>
+  <section class="section shell"><div class="stats"><div class="stat"><strong>{settings.years_experience}</strong><span>Years in international education</span></div><div class="stat"><strong>{settings.countries_taught}</strong><span>Countries taught in</span></div><div class="stat"><strong>{settings.publication_count}</strong><span>Recent publications</span></div><div class="stat"><strong>{settings.practice_label}</strong><span>Creative practice</span></div></div></section>
+  <section class="section shell"><div class="section-head"><div><p class="eyebrow">Profile</p><h2>Research-informed teaching meets creative production.</h2></div><p>{settings.professional_profile}</p></div><div class="tag-cloud">{specs.map(s=><span class="tag">{s.data.name}</span>)}</div></section>
+  <section class="section shell"><div class="section-head"><div><p class="eyebrow">Selected work</p><h2>Ideas made tangible.</h2></div><a class="arrow-link" href="/projects">All projects →</a></div><div class="grid">{featuredProjects.map(p=><article class="card project-card">{p.data.image?<img class="project-visual project-photo" src={p.data.image} alt={p.data.title}/>:<div class="project-visual">{p.data.title.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>}<div class="card-body"><p class="eyebrow">{p.data.category} · {p.data.year}</p><h2>{p.data.title}</h2><p>{p.data.summary}</p></div></article>)}</div></section>
+</Base>

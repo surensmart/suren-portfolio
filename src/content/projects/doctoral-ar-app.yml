@@ -1,0 +1,7 @@
+title: Augmented Reality Lab Learning App
+year: 2022
+summary: Developed for doctoral research, this Android AR application lets online learners interact with virtual lab equipment and complete practice-based tasks when physical laboratories are unavailable. Built with Unity, Vuforia, Blender, Substance Painter, Maya, Photoshop, and C#.
+category: Augmented Reality
+featured: true
+image: /uploads/ar-research.jpg
+tags: [AR, Unity, Vuforia, Online learning, Doctoral research]

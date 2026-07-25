@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+interface Props { title: string; description?: string; }
+const { title, description = 'Portfolio of Dr. Surendheran K., digital media educator, researcher, and creative technologist.' } = Astro.props;
+const path = Astro.url.pathname;
+const settings = (await getCollection('site'))[0].data;
+const nav = [['/','Home'],['/experience','Experience'],['/teaching','Teaching'],['/publications','Publications'],['/grants-awards','Grants & awards'],['/projects','Projects'],['/media','Media'],['/contact','Contact']];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.svg" />
+  <title>{title}</title>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label={`${settings.name} home`}><span>SK</span><span>{settings.name}</span></a>
+    <button class="menu" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+    <nav aria-label="Primary navigation">{nav.map(([href,label]) => <a href={href} class:list={[path === href && 'active']}>{label}</a>)}</nav>
+  </header>
+  <main><slot /></main>
+  <footer><p>{settings.name} · Digital media educator, researcher & creative technologist</p><p><a href={`mailto:${settings.email}`}>Email</a> · <a href={settings.linkedin}>LinkedIn</a></p></footer>
+  <script is:inline>
+    const b=document.querySelector('.menu'),n=document.querySelector('header nav');b?.addEventListener('click',()=>{const o=n?.classList.toggle('open');b.setAttribute('aria-expanded',String(!!o))});
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('/') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+      try {
+        const url = new URL(href, window.location.href);
+        if (url.origin !== window.location.origin) {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+          link.setAttribute('data-external', 'true');
+        }
+      } catch {}
+    });
+  </script>
+</body></html>

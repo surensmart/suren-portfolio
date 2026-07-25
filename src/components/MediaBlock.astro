@@ -1,0 +1,14 @@
+---
+const { image, video_url, title } = Astro.props;
+function embed(url?: string) {
+  if (!url) return undefined;
+  const y = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&/]+)/);
+  if (y) return `https://www.youtube-nocookie.com/embed/${y[1]}`;
+  const v = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (v) return `https://player.vimeo.com/video/${v[1]}`;
+}
+const embedUrl = embed(video_url);
+---
+{image && <img class="entry-image" src={image} alt={title} loading="lazy" />}
+{embedUrl && <div class="video"><iframe src={embedUrl} title={title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>}
+{video_url && !embedUrl && <a class="arrow-link" href={video_url}>Watch video ↗</a>}
