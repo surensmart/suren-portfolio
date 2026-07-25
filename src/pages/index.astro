@@ -4,14 +4,22 @@ import Base from '../layouts/Base.astro';
 const skills = await getCollection('specializations');
 const specs = skills.filter(x=>x.data.category==='Specialization');
 const settings = (await getCollection('site'))[0].data;
-const featuredProjects = (await getCollection('projects')).filter(x=>x.data.featured).sort((a,b)=>b.data.year-a.data.year).slice(0,2);
+const featuredProjects = (await getCollection('projects')).filter(x=>x.data.featured).sort((a,b)=>b.data.year-a.data.year);
+const publicationCount = (await getCollection('publications')).length;
+const recognitionCount = (await getCollection('awards')).length;
+const start = settings.teaching_start_date;
+const now = new Date();
+let totalMonths = (now.getFullYear()-start.getFullYear())*12 + now.getMonth()-start.getMonth();
+if(now.getDate()<start.getDate()) totalMonths--;
+const experienceLabel = `${Math.floor(totalMonths/12)}y ${totalMonths%12}m`;
 ---
 <Base title="Dr. Surendheran K. — Digital Media Educator & Creative Technologist">
   <section class="hero shell">
-    <div><p class="eyebrow">{settings.eyebrow}</p><p class="hero-identity">{settings.name} <span>{settings.credentials}</span></p><h1>{settings.headline}</h1><p class="role">{settings.introduction}</p><div class="hero-actions"><a class="button primary" href="/projects">Explore my work&nbsp; →</a><a class="button" href="/publications">View research</a></div></div>
-    <div class="hero-photo"><img src={settings.profile_image} alt={settings.profile_image_alt} /></div>
+    <div><p class="eyebrow">{settings.eyebrow}</p><h1>{settings.headline}</h1><p class="role">{settings.introduction}</p><div class="hero-actions"><a class="button primary" href="/projects">Explore my work&nbsp; →</a><a class="button" href="/publications">View research</a><a class="button cv-download" href="/downloads/Dr_Surendheran_K_Quick_CV.pdf" download>Download quick CV&nbsp; ↓</a></div><p class="cv-note">A concise, selected overview - not the complete academic CV. Please get in touch for the full and detailed record.</p></div>
+    <figure class="hero-photo"><img src={settings.profile_image} alt={settings.profile_image_alt} /><figcaption><strong>{settings.name}</strong><span>{settings.credentials}</span></figcaption></figure>
   </section>
-  <section class="section shell"><div class="stats"><div class="stat"><strong>{settings.years_experience}</strong><span>Years in international education</span></div><div class="stat"><strong>{settings.countries_taught}</strong><span>Countries taught in</span></div><div class="stat"><strong>{settings.publication_count}</strong><span>Recent publications</span></div><div class="stat"><strong>{settings.practice_label}</strong><span>Creative practice</span></div></div></section>
+  <section class="section shell"><div class="stats"><div class="stat"><strong id="teaching-duration" data-start={start.toISOString().slice(0,10)}>{experienceLabel}</strong><span>Teaching experience since Nov 2010</span></div><div class="stat"><strong>{settings.teaching_countries.length}</strong><span>Countries taught in</span></div><div class="stat"><strong>{publicationCount}</strong><span>Publications — and growing</span></div><div class="stat"><strong>{recognitionCount}</strong><span>Awards & recognitions</span></div></div></section>
   <section class="section shell"><div class="section-head"><div><p class="eyebrow">Profile</p><h2>Research-informed teaching meets creative production.</h2></div><p>{settings.professional_profile}</p></div><div class="tag-cloud">{specs.map(s=><span class="tag">{s.data.name}</span>)}</div></section>
   <section class="section shell"><div class="section-head"><div><p class="eyebrow">Selected work</p><h2>Ideas made tangible.</h2></div><a class="arrow-link" href="/projects">All projects →</a></div><div class="grid">{featuredProjects.map(p=><article class="card project-card">{p.data.image?<img class="project-visual project-photo" src={p.data.image} alt={p.data.title}/>:<div class="project-visual">{p.data.title.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>}<div class="card-body"><p class="eyebrow">{p.data.category} · {p.data.year}</p><h2>{p.data.title}</h2><p>{p.data.summary}</p></div></article>)}</div></section>
+  <script is:inline>const updateTeachingDuration=()=>{const el=document.querySelector('#teaching-duration');if(!el)return;const start=new Date(`${el.dataset.start}T00:00:00`),now=new Date();let months=(now.getFullYear()-start.getFullYear())*12+now.getMonth()-start.getMonth();if(now.getDate()<start.getDate())months--;el.textContent=`${Math.floor(months/12)}y ${months%12}m`};updateTeachingDuration();document.addEventListener('astro:page-load',updateTeachingDuration);</script>
 </Base>

@@ -40,10 +40,8 @@ collections:
           - { label: LinkedIn URL, name: linkedin, widget: string }
           - { label: Phone, name: phone, widget: string, required: false }
           - { label: Location, name: location, widget: string }
-          - { label: Years of experience, name: years_experience, widget: string }
-          - { label: Countries taught in, name: countries_taught, widget: string }
-          - { label: Publication count, name: publication_count, widget: string }
-          - { label: Creative practice label, name: practice_label, widget: string }
+          - { label: Teaching start date, name: teaching_start_date, widget: datetime, format: YYYY-MM-DD, time_format: false, hint: "Used to calculate teaching experience automatically." }
+          - { label: Countries taught in, name: teaching_countries, widget: list, field: { label: Country, name: country, widget: string }, hint: "The homepage automatically displays the number of countries in this list." }
           - { label: Google Analytics Measurement ID, name: analytics_id, widget: string, required: false, hint: "Optional. Looks like G-XXXXXXXXXX. Leave blank to disable analytics." }
   - name: teaching
     label: Teaching Philosophy
@@ -241,7 +239,7 @@ collections:
       - { label: Year, name: year, widget: number, value_type: int }
       - { label: Summary, name: summary, widget: markdown }
       - { label: Category, name: category, widget: string }
-      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Feature on homepage, name: featured, widget: boolean, default: false, hint: "Turn this on to include the project in the homepage Selected Work section. Any number of projects can be featured." }
       - { label: Cover image, name: image, widget: image, required: false }
       - label: Image gallery
         name: images

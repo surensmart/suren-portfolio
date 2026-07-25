@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import { ClientRouter } from 'astro:transitions';
 interface Props { title: string; description?: string; }
 const { title, description = 'Portfolio of Dr. Surendheran K., digital media educator, researcher, and creative technologist.' } = Astro.props;
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\/$/,'') || '/';
 const settings = (await getCollection('site'))[0].data;
 const nav = [['/','Home'],['/experience','Experience'],['/teaching','Teaching'],['/publications','Publications'],['/grants-awards','Grants & awards'],['/projects','Projects'],['/media','Media'],['/contact','Contact']];
 const searchable = [
@@ -43,7 +43,7 @@ const searchable = [
   <header class="site-header">
     <a class="brand" href="/" aria-label={`${settings.name} home`}><span>SK</span><span>{settings.name}</span></a>
     <div class="header-actions"><button class="icon-button search-open" aria-label="Search site">⌕</button><button class="icon-button theme-toggle" aria-label="Switch colour theme">◐</button><button class="menu" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div>
-    <nav aria-label="Primary navigation">{nav.map(([href,label]) => <a href={href} class:list={[path === href && 'active']}>{label}</a>)}</nav>
+    <nav aria-label="Primary navigation">{nav.map(([href,label]) => <a href={href} class:list={[path === href && 'active']} aria-current={path === href ? 'page' : undefined}>{label}</a>)}</nav>
   </header>
   <dialog class="search-dialog"><div class="search-panel"><div class="search-top"><span>⌕</span><input type="search" placeholder="Search publications, projects, awards…" aria-label="Search site"/><button class="search-close" aria-label="Close search">×</button></div><div class="search-filters"><button class="active" data-category="All">All</button>{[...new Set(searchable.map(x=>x.category))].map(c=><button data-category={c}>{c}</button>)}</div><div class="search-results" aria-live="polite"></div><p class="search-hint">Start typing to explore the portfolio.</p></div><script type="application/json" id="search-data" set:html={JSON.stringify(searchable).replace(/</g,'\\u003c')} /></dialog>
   <main><slot /></main>

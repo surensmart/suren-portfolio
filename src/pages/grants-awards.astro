@@ -1,5 +1,23 @@
 ---
-import { getCollection } from 'astro:content'; import Base from '../layouts/Base.astro'; import PageIntro from '../components/PageIntro.astro'; import MediaBlock from '../components/MediaBlock.astro';
-const grants=await getCollection('grants'); const awards=(await getCollection('awards')).sort((a,b)=>b.data.date.valueOf()-a.data.date.valueOf());
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import MediaBlock from '../components/MediaBlock.astro';
+const grants=await getCollection('grants');
+const awards=(await getCollection('awards')).sort((a,b)=>b.data.date.valueOf()-a.data.date.valueOf());
 ---
-<Base title="Grants & Awards — Dr. Surendheran K."><PageIntro eyebrow="Recognition" title="Support for ideas. Recognition for impact."/><section class="section shell"><div class="section-head"><div><p class="eyebrow">Funded research</p><h2>Grants</h2></div></div><div class="grid">{grants.map(g=><article class="card"><MediaBlock image={g.data.image} video_url={g.data.video_url} title={g.data.title}/><p class="eyebrow">{g.data.status} · {g.data.amount}</p><h2>{g.data.title}</h2><p class="meta">{g.data.funder} · {g.data.role}</p><p>{g.data.description}</p></article>)}</div></section><section class="section shell"><div class="section-head"><div><p class="eyebrow">Awards & recognition</p><h2>Selected honours</h2></div></div><div class="list">{awards.map(a=><article><p class="date">{a.data.date.toLocaleDateString('en',{month:'long',year:'numeric'})}</p><h3>{a.data.title}</h3><p class="meta">{a.data.body}</p><p>{a.data.description}</p><MediaBlock image={a.data.image} video_url={a.data.video_url} title={a.data.title}/></article>)}</div></section></Base>
+<Base title="Grants & Awards — Dr. Surendheran K.">
+  <PageIntro eyebrow="Recognition" title="Support for ideas. Recognition for impact."/>
+  <section class="section shell">
+    <div class="section-head"><div><p class="eyebrow">Funded research</p><h2>Grants</h2></div></div>
+    <div class="grid grants-grid">{grants.map(g=><article class="card grant-card">
+      <MediaBlock image={g.data.image} video_url={g.data.video_url} title={g.data.title}/>
+      <div class="grant-meta"><span>{g.data.status}</span>{g.data.amount&&<strong>{g.data.amount}</strong>}</div>
+      <h2>{g.data.title}</h2><p class="meta">{g.data.funder} · {g.data.role}</p><p>{g.data.description}</p>
+    </article>)}</div>
+  </section>
+  <section class="section shell">
+    <div class="section-head"><div><p class="eyebrow">Awards & recognition</p><h2>Selected honours</h2></div></div>
+    <div class="list">{awards.map(a=><article><p class="date">{a.data.date.toLocaleDateString('en',{month:'long',year:'numeric'})}</p><h3>{a.data.title}</h3><p class="meta">{a.data.body}</p><p>{a.data.description}</p><MediaBlock image={a.data.image} video_url={a.data.video_url} title={a.data.title}/></article>)}</div>
+  </section>
+</Base>

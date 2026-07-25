@@ -14,8 +14,12 @@ email: surensmart@gmail.com
 linkedin: https://linkedin.com/in/surendheran
 phone: ""
 location: Ho Chi Minh City, Vietnam
-years_experience: "17"
-publication_count: 19+
-practice_label: 3D+2D
 analytics_id: ""
-countries_taught: "6"
+teaching_start_date: 2010-11-01
+teaching_countries:
+  - India
+  - United Kingdom
+  - Philippines
+  - China
+  - Vietnam
+  - Malaysia
