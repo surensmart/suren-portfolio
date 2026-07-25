@@ -141,6 +141,9 @@ html[data-theme="dark"] .card,html[data-theme="dark"] .stat,html[data-theme="dar
 .contact-links a:hover { color: var(--accent) }
 
 .project-card { padding: 10px }
+.project-card:hover { transform: none; box-shadow: 0 12px 38px rgba(20,20,22,.055) }
+.project-card .arrow-link { display: inline-flex; align-items: center; width: fit-content; padding: 9px 13px; border-radius: 999px; background: rgba(163,61,39,.09); transition: background .2s ease, transform .2s ease }
+.project-card .arrow-link:hover { background: rgba(163,61,39,.15); transform: translateY(-1px) }
 .project-card .card-body { padding: 26px 24px 24px }
 .project-visual { position: relative; overflow: hidden; aspect-ratio: 16/10; border-radius: 23px; background: radial-gradient(circle at 72% 26%,#f2a583,transparent 22%), linear-gradient(135deg,#e3b49f,#733125); display: grid; place-items: center; color: rgba(255,255,255,.88); font-size: clamp(48px,7vw,88px); font-weight: 750; letter-spacing: -.08em }
 .project-visual:after { content: ""; position: absolute; width: 45%; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.36); border-radius: 36%; transform: rotate(25deg); box-shadow: 0 0 0 28px rgba(255,255,255,.06), 0 0 0 58px rgba(255,255,255,.04) }
