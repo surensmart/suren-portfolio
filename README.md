@@ -56,7 +56,7 @@ This is the simplest route because Netlify can host both the static Astro site a
 1. Sign in to Netlify with GitHub and choose **Add new project → Import an existing project**.
 2. Select the `suren-portfolio` repository.
 3. Build command: `npm run build`. Publish directory: `dist`. No environment variables are required.
-4. Deploy. In **Domain management**, add `surensmart.me` and `www.surensmart.me`.
+4. Deploy. In **Domain management**, add `beingsuren.top` and `www.beingsuren.top`.
 5. In **Site configuration → Access & security → OAuth**, install/configure GitHub as an authentication provider. Decap's `github` backend uses Netlify's `/auth` endpoint; only GitHub users with push access to the repo can edit.
 6. Set the Netlify production domain in `site_url`, `display_url`, and `logo_url` in `public/admin/config.yml` until the custom domain is active.
 
@@ -67,9 +67,9 @@ In Spaceship Advanced DNS, remove conflicting A/AAAA/CNAME records for `@` and `
 | Type | Host | Value | TTL |
 |---|---|---|---|
 | A | `@` | `75.2.60.5` | Automatic |
-| CNAME | `www` | `YOUR-NETLIFY-SITE.netlify.app` | Automatic |
+| CNAME | `www` | `surensmart-portfolio.netlify.app` | Automatic |
 
-Replace only `YOUR-NETLIFY-SITE` with the subdomain Netlify assigns. Make `www.surensmart.me` the primary domain in Netlify; Netlify redirects the apex automatically. DNS can take up to 48 hours, though it is usually much faster.
+Make `beingsuren.top` the primary domain in Netlify; Netlify can redirect `www` automatically. DNS can take up to 48 hours, though it is usually much faster.
 
 ## 3. Cloudflare Pages alternative
 
@@ -77,7 +77,7 @@ Cloudflare Pages hosts the site well, but Decap's GitHub login still needs an OA
 
 1. In Cloudflare, choose **Workers & Pages → Create → Pages → Connect to Git** and select the repo.
 2. Framework preset: Astro. Build command: `npm run build`. Output directory: `dist`.
-3. Deploy, then open **Custom domains → Set up a custom domain** and add `surensmart.me` and `www.surensmart.me`.
+3. Deploy, then open **Custom domains → Set up a custom domain** and add `beingsuren.top` and `www.beingsuren.top`.
 4. Cloudflare requires the apex domain to use Cloudflare nameservers. Add the domain as a Cloudflare zone, then replace the current Spaceship nameservers with the two nameservers Cloudflare assigns. Cloudflare creates the Pages DNS records after the custom-domain flow.
 5. If using only `www` while keeping Spaceship DNS authoritative, add this record instead:
 
@@ -89,7 +89,7 @@ Do not manually CNAME the apex to `pages.dev` unless Spaceship explicitly suppor
 
 ## 4. Using `/admin`
 
-1. Visit `https://www.surensmart.me/admin/` and choose **Login with GitHub**.
+1. Visit `https://beingsuren.top/admin/` and choose **Login with GitHub**.
 2. Authorize the GitHub OAuth application. The account must have push access to the repository.
 3. Pick a collection, choose **New**, complete the fields, and select **Publish**.
 4. Decap commits the YAML file and any uploaded image to `main`. The host notices the commit and rebuilds the site automatically, normally within a few minutes.
