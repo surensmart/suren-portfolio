@@ -8,7 +8,7 @@ const featuredProjects = (await getCollection('projects')).filter(x=>x.data.feat
 ---
 <Base title="Dr. Surendheran K. — Digital Media Educator & Creative Technologist">
   <section class="hero shell">
-    <div><p class="eyebrow">{settings.eyebrow}</p><h1>{settings.headline}</h1><p class="role">{settings.introduction}</p><div class="hero-actions"><a class="button primary" href="/projects">Explore my work&nbsp; →</a><a class="button" href="/publications">View research</a></div></div>
+    <div><p class="eyebrow">{settings.eyebrow}</p><p class="hero-identity">{settings.name} <span>{settings.credentials}</span></p><h1>{settings.headline}</h1><p class="role">{settings.introduction}</p><div class="hero-actions"><a class="button primary" href="/projects">Explore my work&nbsp; →</a><a class="button" href="/publications">View research</a></div></div>
     <div class="hero-photo"><img src={settings.profile_image} alt={settings.profile_image_alt} /></div>
   </section>
   <section class="section shell"><div class="stats"><div class="stat"><strong>{settings.years_experience}</strong><span>Years in international education</span></div><div class="stat"><strong>{settings.countries_taught}</strong><span>Countries taught in</span></div><div class="stat"><strong>{settings.publication_count}</strong><span>Recent publications</span></div><div class="stat"><strong>{settings.practice_label}</strong><span>Creative practice</span></div></div></section>
